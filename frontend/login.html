@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - PlagiCheck</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="User Side/css/styles.css">
+  <style id="app-loading-style">
+    body.app-loading {
+      background: #f5f7fb;
+    }
+    body.app-loading > * {
+      opacity: 0;
+    }
+    body.app-loading::before {
+      content: 'Loading...';
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: #3d7042;
+      background: #f5f7fb;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body class="app-loading">
+  <nav class="navbar-simple">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-logo">
+        <img src="User Side/images/logo.png" alt="PlagiCheck Logo">
+        <span class="logo-text">Plagi<span>Check</span></span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">
+          <img src="User Side/images/logo.png" alt="PlagiCheck Logo">
+          <span class="auth-logo-text">Plagi<span>Check</span></span>
+        </div>
+        <h2 class="auth-title">Sign-in / Log-in</h2>
+      </div>
+
+      <form class="auth-form">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" id="emailInput" placeholder="Type your email address" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="passwordInput" class="form-input" placeholder="Type your password" required>
+        </div>
+
+        <div class="form-link">
+          <a href="register.html">Don't have an account? Register here</a>
+        </div>
+
+        <button type="submit" id="loginBtn" class="btn btn-primary btn-full btn-lg">Log-in</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="User Side/js/script.js?v=3"></script>
+  <script src="assets/app.js?v=23"></script>
+</body>
+</html>
+
+
+
