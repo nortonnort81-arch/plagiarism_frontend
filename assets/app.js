@@ -31,11 +31,21 @@
     }
   }
 
+  const PROD_API_ROOT = 'https://plagiarismapi.ccsblock2.com/api';
+  const isGithubPages = window.location.hostname.endsWith('github.io');
+  const githubPathParts = path.split('/').filter(Boolean);
+  const githubRepoBase = isGithubPages && githubPathParts.length > 0
+    ? `/${githubPathParts[0]}`
+    : '';
   const APP_ROOT = rawPath.includes('/frontend')
     ? rawPath.split('/frontend')[0]
     : '';
-  const FRONTEND_ROOT = `${APP_ROOT}/frontend`;
-  const API_ROOT = `${APP_ROOT}/api`;
+  const FRONTEND_ROOT = isGithubPages
+    ? githubRepoBase
+    : `${APP_ROOT}/frontend`;
+  const API_ROOT = isGithubPages
+    ? PROD_API_ROOT
+    : `${APP_ROOT}/api`;
 
   const AUTH_TOKEN_KEY = 'plagicheck:accessToken';
 
@@ -1307,8 +1317,6 @@
     void init();
   });
 })();
-
-
 
 
 
