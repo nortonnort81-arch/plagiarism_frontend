@@ -75,6 +75,62 @@
       .replace(/'/g, '&#039;');
   }
 
+  function renderHighlightedText(rawText, highlights) {
+    const text = String(rawText || '');
+    const characters = Array.from(text);
+    const safeHighlights = Array.isArray(highlights)
+      ? highlights
+          .map((highlight) => ({
+            start: Number(highlight?.start ?? 0),
+            end: Number(highlight?.end ?? 0),
+            documentId: Number(highlight?.document_id ?? 0),
+            filename: String(highlight?.filename ?? ''),
+          }))
+          .filter((highlight) => Number.isFinite(highlight.start) && Number.isFinite(highlight.end) && highlight.end > highlight.start)
+          .sort((left, right) => left.start - right.start)
+      : [];
+
+    if (!characters.length) {
+      return '';
+    }
+
+    if (!safeHighlights.length) {
+      return escapeHtml(text);
+    }
+
+    let cursor = 0;
+    let html = '';
+
+    safeHighlights.forEach((highlight) => {
+      const start = Math.max(cursor, Math.min(characters.length, highlight.start));
+      const end = Math.max(start, Math.min(characters.length, highlight.end));
+
+      if (start > cursor) {
+        html += escapeHtml(characters.slice(cursor, start).join(''));
+      }
+
+      if (end > start) {
+        const matchedText = characters.slice(start, end).join('');
+        const title = highlight.filename
+          ? `Matched with ${highlight.filename}`
+          : 'Matched source text';
+        const documentIdAttr = highlight.documentId > 0
+          ? ` data-document-id="${highlight.documentId}"`
+          : '';
+
+        html += `<span class="plagiarized-text" title="${escapeHtml(title)}"${documentIdAttr}>${escapeHtml(matchedText)}</span>`;
+      }
+
+      cursor = Math.max(cursor, end);
+    });
+
+    if (cursor < characters.length) {
+      html += escapeHtml(characters.slice(cursor).join(''));
+    }
+
+    return html;
+  }
+
   function formatNumber(value) {
     return new Intl.NumberFormat().format(Number(value || 0));
   }

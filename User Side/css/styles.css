@@ -1,16 +1,16 @@
-/* ══════════════════════════════════
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
    PlagiCheck - Updated Stylesheet
    Responsive Design with Sticky Navigation
-══════════════════════════════════ */
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 
-/* ═══ CSS RESET ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â CSS RESET Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* ═══ CSS VARIABLES ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â CSS VARIABLES Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 :root {
   --green-primary: #3d7042;
   --green-mid: #5a9460;
@@ -35,7 +35,7 @@
   --blue-info: #3a80d2;
 }
 
-/* ═══ BASE STYLES ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â BASE STYLES Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 html, body {
   height: 100%;
   font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -52,7 +52,7 @@ body {
   min-height: 100vh;
 }
 
-/* ═══ TYPOGRAPHY ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â TYPOGRAPHY Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 800;
   line-height: 1.3;
@@ -69,7 +69,7 @@ a {
   transition: color 0.2s;
 }
 
-/* ═══ PRE-LOGIN SIMPLE NAVBAR (index, login, register) ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â PRE-LOGIN SIMPLE NAVBAR (index, login, register) Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .navbar-simple {
   background: var(--bg-white);
   border-bottom: 1px solid var(--border-color);
@@ -108,7 +108,7 @@ a {
   color: var(--green-mid);
 }
 
-/* ═══ POST-LOGIN SIDEBAR NAVIGATION (Desktop) ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â POST-LOGIN SIDEBAR NAVIGATION (Desktop) Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .sidebar-nav {
   position: fixed;
   left: 0;
@@ -192,7 +192,7 @@ a {
   padding-bottom: 70px; /* Space for bottom nav on mobile */
 }
 
-/* ═══ BOTTOM NAVIGATION (Mobile) ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â BOTTOM NAVIGATION (Mobile) Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -244,7 +244,7 @@ a {
   color: var(--green-mid);
 }
 
-/* ═══ BUTTONS ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â BUTTONS Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -317,7 +317,7 @@ a {
   background: #d03030;
 }
 
-/* ═══ FORMS ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â FORMS Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .form-group {
   margin-bottom: 1.25rem;
 }
@@ -390,7 +390,7 @@ a {
   text-decoration: underline;
 }
 
-/* ═══ CARDS ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â CARDS Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .card {
   background: var(--bg-white);
   border-radius: 12px;
@@ -419,7 +419,7 @@ a {
   margin-bottom: 1rem;
 }
 
-/* ═══ CONTAINERS ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â CONTAINERS Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -437,7 +437,7 @@ a {
   padding: 2rem 0;
 }
 
-/* ═══ WELCOME PAGE (CENTERED) ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â WELCOME PAGE (CENTERED) Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .welcome-screen {
   display: flex;
   flex-direction: column;
@@ -487,7 +487,7 @@ a {
   max-width: 300px;
 }
 
-/* ═══ AUTH PAGES ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â AUTH PAGES Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .auth-container {
   display: flex;
   align-items: center;
@@ -560,7 +560,7 @@ a {
   margin-top: 1.5rem;
 }
 
-/* ═══ DASHBOARD ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â DASHBOARD Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .dashboard-header {
   background: var(--bg-white);
   padding: 2rem 1rem;
@@ -664,7 +664,7 @@ a {
   transform: translateY(-2px);
 }
 
-/* ═══ SCAN PAGE ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â SCAN PAGE Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .scan-container {
   max-width: 800px;
   margin: 0 auto;
@@ -697,7 +697,7 @@ a {
   gap: 1rem;
 }
 
-/* ═══ RESULTS PAGE ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â RESULTS PAGE Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .results-header {
   background: var(--bg-white);
   padding: 2rem;
@@ -861,21 +861,27 @@ a {
 .source-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   margin-bottom: 0.75rem;
 }
 
 .source-title {
   font-weight: 700;
   color: var(--text-dark);
-  flex: 1;
+  flex: 1 1 16rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .source-percentage {
   font-weight: 800;
   font-size: 1.25rem;
   color: var(--red-error);
-  margin-left: 1rem;
+  margin-left: 0;
+  flex: 0 0 auto;
 }
 
 .source-match {
@@ -903,7 +909,7 @@ a {
   padding: 0 1rem;
 }
 
-/* ═══ HISTORY PAGE ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â HISTORY PAGE Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .history-list {
   display: flex;
   flex-direction: column;
@@ -990,7 +996,7 @@ a {
   margin-bottom: 2rem;
 }
 
-/* ═══ PROFILE PAGE ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â PROFILE PAGE Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .profile-header {
   background: var(--bg-white);
   padding: 2rem;
@@ -1072,7 +1078,7 @@ a {
   color: var(--text-dark);
 }
 
-/* ═══ MODAL ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â MODAL Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .modal {
   display: none;
   position: fixed;
@@ -1135,7 +1141,7 @@ a {
   margin-top: 1.5rem;
 }
 
-/* ═══ UTILITIES ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â UTILITIES Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .text-center { text-align: center; }
 .text-left { text-align: left; }
 .text-right { text-align: right; }
@@ -1160,7 +1166,7 @@ a {
 .mobile-only.bottom-nav { display: flex; } /* Ensure bottom nav maintains flex layout */
 .desktop-only { display: none; }
 
-/* ═══ SCAN RESULTS MODAL ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â SCAN RESULTS MODAL Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 .scan-modal {
   display: none;
   position: fixed;
@@ -1363,7 +1369,7 @@ a {
   min-width: 140px;
 }
 
-/* ═══ RESPONSIVE DESIGN ═══ */
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â RESPONSIVE DESIGN Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 
 /* Mobile adjustments for scan modal */
 @media (max-width: 767px) {
@@ -1399,7 +1405,7 @@ a {
   }
 
   .progress-ring-circle {
-    stroke-dasharray: 377; /* 2 * π * 60 */
+    stroke-dasharray: 377; /* 2 * Ãâ‚¬ * 60 */
     stroke-dashoffset: 45; /* 88% = 377 - (377 * 0.88) = 45 */
   }
 
