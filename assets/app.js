@@ -75,7 +75,30 @@
       .replace(/'/g, '&#039;');
   }
 
-  function renderHighlightedText(rawText, highlights) {
+  const SOURCE_COLOR_PALETTE = [
+    { accent: '#d64f4f', soft: 'rgba(214, 79, 79, 0.14)', text: '#7f1d1d', highlight: 'rgba(214, 79, 79, 0.24)' },
+    { accent: '#2f7a4e', soft: 'rgba(47, 122, 78, 0.14)', text: '#14532d', highlight: 'rgba(47, 122, 78, 0.22)' },
+    { accent: '#2b6cb0', soft: 'rgba(43, 108, 176, 0.14)', text: '#1e3a8a', highlight: 'rgba(43, 108, 176, 0.22)' },
+    { accent: '#9a5b16', soft: 'rgba(154, 91, 22, 0.14)', text: '#78350f', highlight: 'rgba(245, 158, 11, 0.24)' },
+    { accent: '#7c3aed', soft: 'rgba(124, 58, 237, 0.14)', text: '#5b21b6', highlight: 'rgba(124, 58, 237, 0.22)' },
+    { accent: '#0f766e', soft: 'rgba(15, 118, 110, 0.14)', text: '#115e59', highlight: 'rgba(20, 184, 166, 0.22)' },
+  ];
+
+  function getSourceColor(sourceIndex) {
+    const safeIndex = Number.isFinite(Number(sourceIndex)) ? Number(sourceIndex) : 0;
+    return SOURCE_COLOR_PALETTE[((safeIndex % SOURCE_COLOR_PALETTE.length) + SOURCE_COLOR_PALETTE.length) % SOURCE_COLOR_PALETTE.length];
+  }
+
+  function buildSourceStyleMap(results) {
+    const styles = new Map();
+    (Array.isArray(results) ? results : []).forEach((result, index) => {
+      const sourceIndex = Number.isFinite(Number(result?.source_index)) ? Number(result.source_index) : index;
+      styles.set(Number(result?.document_id ?? 0), getSourceColor(sourceIndex));
+    });
+    return styles;
+  }
+
+  function renderHighlightedText(rawText, highlights, sourceStyles) {
     const text = String(rawText || '');
     const characters = Array.from(text);
     const safeHighlights = Array.isArray(highlights)
@@ -114,11 +137,12 @@
         const title = highlight.filename
           ? `Matched with ${highlight.filename}`
           : 'Matched source text';
-        const documentIdAttr = highlight.documentId > 0
-          ? ` data-document-id="${highlight.documentId}"`
-          : '';
+        const documentId = Number(highlight.documentId || 0);
+        const color = sourceStyles.get(documentId) || getSourceColor(0);
+        const documentIdAttr = documentId > 0 ? ` data-document-id="${documentId}"` : '';
+        const styleAttr = ` style="--highlight-bg:${color.highlight};--highlight-accent:${color.accent};--highlight-text:${color.text};"`;
 
-        html += `<span class="plagiarized-text" title="${escapeHtml(title)}"${documentIdAttr}>${escapeHtml(matchedText)}</span>`;
+        html += `<span class="plagiarized-text" title="${escapeHtml(title)}"${documentIdAttr}${styleAttr}>${escapeHtml(matchedText)}</span>`;
       }
 
       cursor = Math.max(cursor, end);
@@ -667,12 +691,23 @@
     state.currentReport = report;
     saveLastReportId(report.id);
 
-    const plagiarized = Math.round(report.highest_similarity || 0);
+    const plagiarized = Math.round(Number(report.plagiarized_percent ?? report.highest_similarity ?? 0));
     const unique = Math.max(0, 100 - plagiarized);
+    const sourceStyles = buildSourceStyleMap(report.results || []);
+
     document.querySelectorAll('.result-stat.plagiarized .result-stat-value').forEach((el) => { el.textContent = `${plagiarized}%`; });
     document.querySelectorAll('.result-stat.unique .result-stat-value').forEach((el) => { el.textContent = `${unique}%`; });
     document.querySelectorAll('.highlighted-text').forEach((el) => {
-      el.innerHTML = renderHighlightedText(report.raw_text || '', report.highlights || []);
+      el.innerHTML = renderHighlightedText(report.raw_text || '', report.highlights || [], sourceStyles);
+      el.querySelectorAll('.plagiarized-text[data-document-id]').forEach((segment) => {
+        segment.addEventListener('click', () => {
+          const targetId = Number(segment.dataset.documentId || 0);
+          const sourceCard = document.querySelector(`.source-item[data-document-id="${targetId}"]`);
+          if (sourceCard) {
+            sourceCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      });
     });
     document.querySelectorAll('.word-count').forEach((el) => { el.textContent = `${report.word_count}/25000 words`; });
     document.querySelector('.document-name')?.replaceChildren(document.createTextNode(report.checked_filename));
@@ -680,15 +715,19 @@
     const sources = document.querySelector('.matched-sources');
     if (sources) {
       const items = report.results || [];
-      sources.innerHTML = `<h3>Matched Sources</h3>${items.length ? items.map((item, index) => `
-        <div class="source-item" data-document-id="${item.document_id}">
+      sources.innerHTML = `<h3>Matched Sources</h3>${items.length ? items.map((item, index) => {
+        const color = sourceStyles.get(Number(item.document_id)) || getSourceColor(index);
+        const style = `--source-accent:${color.accent};--source-soft:${color.soft};--source-text:${color.text};`;
+        return `
+        <div class="source-item" data-document-id="${item.document_id}" style="${style}">
           <div class="source-header">
             <div class="source-title">${index + 1}. ${escapeHtml(item.filename)}</div>
-            <div class="source-percentage">${Math.round(item.similarity_percent)}%</div>
+            <div class="source-percentage">${Math.round(Number(item.similarity_percent || 0))}%</div>
           </div>
           <div class="source-match">${escapeHtml(item.file_type.toUpperCase())} source uploaded ${formatDate(item.uploaded_at)}</div>
           <a href="#" class="source-url">Document ID: ${item.document_id}</a>
-        </div>`).join('') : '<p>No source documents met the minimum similarity threshold.</p>'}`;
+        </div>`;
+      }).join('') : '<p>No source documents met the minimum similarity threshold.</p>'}`;
     }
 
     const actionButtons = document.querySelectorAll('.results-actions .btn.btn-outline');
