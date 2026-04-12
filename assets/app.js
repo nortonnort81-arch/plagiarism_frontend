@@ -59,11 +59,11 @@
   }
 
   function isUserPage() {
-    return path.includes('/frontend/User Side/');
+    return path.includes('/frontend/User Side/') || path.includes('/User Side/');
   }
 
   function isAdminPage() {
-    return path.includes('/frontend/Admin Side/');
+    return path.includes('/frontend/Admin Side/') || path.includes('/Admin Side/');
   }
 
   function escapeHtml(value) {
