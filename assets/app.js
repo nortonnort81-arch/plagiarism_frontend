@@ -615,7 +615,9 @@
     const unique = Math.max(0, 100 - plagiarized);
     document.querySelectorAll('.result-stat.plagiarized .result-stat-value').forEach((el) => { el.textContent = `${plagiarized}%`; });
     document.querySelectorAll('.result-stat.unique .result-stat-value').forEach((el) => { el.textContent = `${unique}%`; });
-    document.querySelectorAll('.highlighted-text').forEach((el) => { el.textContent = report.raw_text || ''; });
+    document.querySelectorAll('.highlighted-text').forEach((el) => {
+      el.innerHTML = renderHighlightedText(report.raw_text || '', report.highlights || []);
+    });
     document.querySelectorAll('.word-count').forEach((el) => { el.textContent = `${report.word_count}/25000 words`; });
     document.querySelector('.document-name')?.replaceChildren(document.createTextNode(report.checked_filename));
 
@@ -623,7 +625,7 @@
     if (sources) {
       const items = report.results || [];
       sources.innerHTML = `<h3>Matched Sources</h3>${items.length ? items.map((item, index) => `
-        <div class="source-item">
+        <div class="source-item" data-document-id="${item.document_id}">
           <div class="source-header">
             <div class="source-title">${index + 1}. ${escapeHtml(item.filename)}</div>
             <div class="source-percentage">${Math.round(item.similarity_percent)}%</div>
