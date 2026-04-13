@@ -691,9 +691,14 @@
     state.currentReport = report;
     saveLastReportId(report.id);
 
-    const plagiarized = Math.round(Number(report.plagiarized_percent ?? report.highest_similarity ?? 0));
+    const sourceItems = Array.isArray(report.results) ? report.results : [];
+    const summedSourcePercent = sourceItems.reduce((sum, item) => sum + Number(item?.similarity_percent || 0), 0);
+    const rawPlagiarized = summedSourcePercent > 0
+      ? summedSourcePercent
+      : Number(report.plagiarized_percent ?? report.highest_similarity ?? 0);
+    const plagiarized = Math.max(0, Math.min(100, Math.round(rawPlagiarized)));
     const unique = Math.max(0, 100 - plagiarized);
-    const sourceStyles = buildSourceStyleMap(report.results || []);
+    const sourceStyles = buildSourceStyleMap(sourceItems);
 
     document.querySelectorAll('.result-stat.plagiarized .result-stat-value').forEach((el) => { el.textContent = `${plagiarized}%`; });
     document.querySelectorAll('.result-stat.unique .result-stat-value').forEach((el) => { el.textContent = `${unique}%`; });
@@ -714,7 +719,7 @@
 
     const sources = document.querySelector('.matched-sources');
     if (sources) {
-      const items = report.results || [];
+      const items = sourceItems;
       sources.innerHTML = `<h3>Matched Sources</h3>${items.length ? items.map((item, index) => {
         const color = sourceStyles.get(Number(item.document_id)) || getSourceColor(index);
         const style = `--source-accent:${color.accent};--source-soft:${color.soft};--source-text:${color.text};`;
