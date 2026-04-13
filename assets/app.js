@@ -121,12 +121,46 @@
       return escapeHtml(text);
     }
 
+    const smoothedHighlights = [];
+    const maxBridgeLength = 14;
+
+    safeHighlights.forEach((highlight) => {
+      const normalizedHighlight = {
+        ...highlight,
+        start: Math.max(0, Math.min(characters.length, highlight.start)),
+        end: Math.max(0, Math.min(characters.length, highlight.end)),
+      };
+
+      const previous = smoothedHighlights[smoothedHighlights.length - 1];
+      if (!previous) {
+        smoothedHighlights.push(normalizedHighlight);
+        return;
+      }
+
+      const gapLength = normalizedHighlight.start - previous.end;
+      const gapText = gapLength > 0
+        ? characters.slice(previous.end, normalizedHighlight.start).join('')
+        : '';
+      const bridgeableGap = gapLength > 0
+        && gapLength <= maxBridgeLength
+        && previous.documentId === normalizedHighlight.documentId
+        && !/[.!?\n\r]/.test(gapText)
+        && /^[\s,:;()\[\]"'\-]*([A-Za-z]{1,3}[\s,:;()\[\]"'\-]*)?$/.test(gapText);
+
+      if (normalizedHighlight.start <= previous.end || bridgeableGap) {
+        previous.end = Math.max(previous.end, normalizedHighlight.end);
+        return;
+      }
+
+      smoothedHighlights.push(normalizedHighlight);
+    });
+
     let cursor = 0;
     let html = '';
 
-    safeHighlights.forEach((highlight) => {
-      const start = Math.max(cursor, Math.min(characters.length, highlight.start));
-      const end = Math.max(start, Math.min(characters.length, highlight.end));
+    smoothedHighlights.forEach((highlight) => {
+      const start = Math.max(cursor, highlight.start);
+      const end = Math.max(start, highlight.end);
 
       if (start > cursor) {
         html += escapeHtml(characters.slice(cursor, start).join(''));
